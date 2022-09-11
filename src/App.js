@@ -1,25 +1,52 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { useCallback, useState } from 'react';
+import ReactFlow, { applyEdgeChanges, applyNodeChanges, addEdge, MiniMap } from 'react-flow-renderer';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+import initialNodes from './components/nodes.js';
+import initialEdges from './components/edges.js';
+
+function Flow() {
+  //Nodes
+  const [nodes, setNodes] = useState(initialNodes);
+  const onNodesChange = useCallback(
+    (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
+    [setNodes]
+  )
+  
+  //Edges
+  const [edges, setEdges] = useState(initialEdges);
+  const onEdgesChange = useCallback(
+    (changes) => setEdges((eds) => applyEdgeChanges(changes, eds)),
+    [setEdges]
+  )
+
+  //connections
+  const onConnect = useCallback(
+    (connection) => setEdges((eds) => addEdge(connection, eds)),
+    [setEdges]
   );
-}
+  console.log([nodes,edges]);
+  ;
+  return (
+    <div 
+      className='App'
+      style={{height:'100vh'}}
+    >
+      <ReactFlow 
+        nodes={nodes}
+        edges={edges}
+        onNodesChange={onNodesChange}
+        onEdgesChange={onEdgesChange}
+        onConnect={onConnect}
+        fitView
+        attributionPosition="top-right"
+      >
+        <MiniMap/>
+      </ReactFlow>
+    </div>
+    
+  )
+;}
 
-export default App;
+export default Flow
+
