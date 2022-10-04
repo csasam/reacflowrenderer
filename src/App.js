@@ -28,11 +28,18 @@ function Flow() {
   );
   
   return (
-    <div 
+    
+    <div>
+      <h1>This is react-flow-renderer testing</h1>
+      <div
       className='App'
-      style={{height:'100vh'}}
-    >
-      <ReactFlow 
+      style={{
+        height: "75vh",
+        width: "75vw",
+        border: "1px solid black",
+        marginLeft: "12.5vw"
+      }}>
+        <ReactFlow 
         nodes={nodes}
         edges={edges}
         onNodesChange={onNodesChange}
@@ -45,7 +52,15 @@ function Flow() {
         <MiniMap/>
         <Controls/>
       </ReactFlow>
+      </div>
+      
+      <div>
+    <button type="button">
+    Create Circle
+  </button>
     </div>
+    </div>
+    
     
   )
 ;}
